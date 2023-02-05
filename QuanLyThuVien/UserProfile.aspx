@@ -1,11 +1,11 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="UserSignup.aspx.cs" Inherits="QuanLyThuVien.UserSignup" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="UserProfile.aspx.cs" Inherits="QuanLyThuVien.UserProfile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
-    <div class="container">
+    <div class="container-fluid">
         <div class="row">
-            <div class="col-md-8 mx-auto">
+            <div class="col-md-5">
                 <div class="card">
                     <div class="card-body">
                         <div class="row">
@@ -18,7 +18,9 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h4>Đăng ký thành viên</h4>
+                                    <h4>Hồ sơ</h4>
+                                    <span>Trạng thái tài khoản - </span>
+                                    <asp:Label class="badge badge-pill badge-info" ID="Label1" runat="server" Text="Label">Active</asp:Label>
                                 </center>
                             </div>
                         </div>
@@ -99,31 +101,74 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label>Tên đăng nhập</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox8" runat="server" placeholder="Tên đăng nhập" TextMode="Number"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox8" runat="server" placeholder="Tên đăng nhập" TextMode="Number" ReadOnly="True"></asp:TextBox>
                                 </div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <label>Mật khẩu</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox9" runat="server" placeholder="Mật khẩu" TextMode="Password"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox9" runat="server" placeholder="Mật khẩu" TextMode="Password" ReadOnly="True"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Mật khẩu mới</label>
+                                <div class="form-group">
+                                    <asp:TextBox CssClass="form-control" ID="TextBox10" runat="server" placeholder="Mật khẩu" TextMode="Password"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
-                            <div class="col">
-                                <div class="form-group">
-                                    <asp:Button class="btn btn-success btn-block btn-lg" ID="Button1" runat="server" Text="Đăng ký" />
-                                </div>
+                            <div class="col-8 mx-auto">
+                                <center>
+                                    <div class="form-group">
+                                        <asp:Button class="btn btn-primary btn-block btn-lg" ID="Button1" runat="server" Text="Cập nhật" />
+                                    </div>
+                                </center>
                             </div>
                         </div>
                     </div>
                 </div>
                 <a href="HomePage.aspx"><< Back to Home</a><br>
                 <br>
+            </div>
+
+            <div class="col-md-7">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col">
+                                <center>
+                                    <img width="100" height="100" src="imgs/books1.png" />
+                                </center>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <center>
+                                    <h4>Sách đã mượn</h4>
+                                    <asp:Label class="badge badge-pill badge-info" ID="Label2" runat="server" Text="Thông tin sách"></asp:Label>
+                                </center>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <hr>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server"></asp:GridView>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
