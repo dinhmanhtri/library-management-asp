@@ -64,13 +64,18 @@
                                     <asp:DropDownList class="form-control" ID="DropDownList1" runat="server">
                                         <asp:ListItem Text="Lựa chọn" Value="luachon" />
                                         <asp:ListItem Text="Hà Nội" Value="hanoi" />
+                                        <asp:ListItem Text="Hà Nam" Value="hanam" />
+                                        <asp:ListItem Text="Bắc Ninh" Value="bacninh" />
+                                        <asp:ListItem Text="Nam Định" Value="namdinh" />
+                                        <asp:ListItem Text="Thái Bình" Value="thaibinh" />
+                                        <asp:ListItem Text="Hải Phòng" Value="haiphong" />
                                     </asp:DropDownList>
                                 </div>
                             </div>
                             <div class="col-md-4">
                                 <label>Quận/Huyện</label>
                                 <div class="form-group">
-                                    <asp:TextBox class="form-control" ID="TextBox6" runat="server" placeholder="Quận/Huyện" TextMode="Email"></asp:TextBox>
+                                    <asp:TextBox class="form-control" ID="TextBox6" runat="server" placeholder="Quận/Huyện"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -100,9 +105,9 @@
 
                         <div class="row">
                             <div class="col-md-6">
-                                <label>Tên đăng nhập</label>
+                                <label>Tên tài khoản</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox8" runat="server" placeholder="Tên đăng nhập" TextMode="Number"></asp:TextBox>
+                                    <asp:TextBox ID="TextBox8" runat="server" placeholder="Tên tài khoản"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -116,7 +121,7 @@
                         <div class="row">
                             <div class="col">
                                 <div class="form-group">
-                                    <asp:Button class="btn btn-success btn-block btn-lg" ID="Button1" runat="server" Text="Đăng ký" />
+                                    <asp:Button class="btn btn-success btn-block btn-lg" ID="Button1" runat="server" Text="Đăng ký" OnClick="Button1_Click" />
                                 </div>
                             </div>
                         </div>
