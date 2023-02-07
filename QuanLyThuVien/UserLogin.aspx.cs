@@ -28,32 +28,31 @@ namespace QuanLyThuVien
                 Response.Write("<script>alert('Tên tài khoản hoặc mật khẩu không được để trống.')</script>");
                 return;
             }
-
             try
             {
+
                 using (SqlConnection con = new SqlConnection(_strcon))
                 {
                     con.Open();
 
-                    string cmdText = $"SELECT * FROM member_master_tbl WHERE member_id = '{memberID}' AND password = '{password}'";
-                    SqlCommand cmd = new SqlCommand(cmdText, con);
-                    SqlDataAdapter da = new SqlDataAdapter(cmd);
-                    DataTable dt = new DataTable();
-                    da.Fill(dt);
-
-                    if (dt.Rows.Count >= 1)
+                    using (SqlCommand cmd = new SqlCommand("select * from member_master_table where member_id=@memberID AND password=@password", con))
                     {
-                        // Login successful
-
-                        Response.Write("<script>alert('Đăng nhập thành công!')</script>");
-                        Session["username"] = memberID;
-                        Response.Redirect("HomePage.aspx");
-                    }
-                    else
-                    {
-                        // Login failed
-                        Response.Write("<script>alert('Tên tài khoản hoặc mật khẩu không đúng.')</script>");
-                        return;
+                        cmd.Parameters.AddWithValue("@memberID", memberID);
+                        cmd.Parameters.AddWithValue("@password", password);
+                        using (SqlDataReader dr = cmd.ExecuteReader())
+                        {
+                            if (dr.HasRows)
+                            {
+                                while (dr.Read())
+                                {
+                                    Response.Write("<script>alert('" + dr.GetValue(8).ToString() + "');</script>");
+                                }
+                            }
+                            else
+                            {
+                                Response.Write("<script>alert('Thông tin không hợp lệ');</script>");
+                            }
+                        }
                     }
                 }
             }
