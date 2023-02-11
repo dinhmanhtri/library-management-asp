@@ -1,6 +1,24 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Site1.Master" AutoEventWireup="true" CodeBehind="AdminBookInventory.aspx.cs" Inherits="QuanLyThuVien.AdminBookInventory" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".table").prepend($("<thead></thead>").append($(this).find("tr:first"))).dataTable();
+        });
+
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#imgview').attr('src', e.target.result);
+                };
+
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+    </script>
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <div class="container-fluid">
@@ -18,7 +36,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <img width="100" src="imgs/books.png" />
+                                    <img id="imgview" height="150" width="100" src="book_inventory/books1.png" />
                                 </center>
                             </div>
                         </div>
@@ -29,20 +47,20 @@
                         </div>
                         <div class="row">
                             <div class="col">
-                                <asp:FileUpload class="form-control" ID="FileUpload1" runat="server" />
+                                <asp:FileUpload onchange="readURL(this);" class="form-control" ID="FileUpload1" runat="server" />
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-3">
+                            <div class="col-md-4">
                                 <label>Mã sách</label>
                                 <div class="form-group">
                                     <div class="input-group">
-                                        <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server" placeholder="Mã"></asp:TextBox>
-                                        <asp:LinkButton class="btn btn-primary" ID="LinkButton4" runat="server"><i class="fas fa-check-circle"></i></asp:LinkButton>
+                                        <asp:TextBox CssClass="form-control" ID="TextBox1" runat="server" placeholder="Mã sách"></asp:TextBox>
+                                        <asp:Button class="form-control btn btn-primary" ID="Button4" runat="server" Text="Go" OnClick="Button4_Click" />
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-md-9">
+                            <div class="col-md-8">
                                 <label>Tên sách</label>
                                 <div class="form-group">
                                     <asp:TextBox CssClass="form-control" ID="TextBox2" runat="server" placeholder="Tên sách"></asp:TextBox>
@@ -55,11 +73,11 @@
                                 <div class="form-group">
                                     <asp:DropDownList class="form-control" ID="DropDownList1" runat="server">
                                         <asp:ListItem Text="Tiếng Anh" Value="English" />
-                                        <asp:ListItem Text="Tiếng Việt" Value="Vietnamese" />
-                                        <asp:ListItem Text="Tiếng Trung Quốc" Value="Chinese" />
+                                        <asp:ListItem Text="Tiếng Nhật" Value="Japanese" />
+                                        <asp:ListItem Text="Tiếng Trung" Value="Chinese" />
                                         <asp:ListItem Text="Tiếng Pháp" Value="French" />
                                         <asp:ListItem Text="Tiếng Đức" Value="German" />
-                                        <asp:ListItem Text="Tiếng Nhật" Value="Japanese" />
+                                        <asp:ListItem Text="Tiếng Việt" Value="Vietnamese" />
                                     </asp:DropDownList>
                                 </div>
                                 <label>Tên nhà xuất bản</label>
@@ -67,6 +85,9 @@
                                     <asp:DropDownList class="form-control" ID="DropDownList2" runat="server">
                                         <asp:ListItem Text="Publisher 1" Value="Publisher 1" />
                                         <asp:ListItem Text="Publisher 2" Value="Publisher 2" />
+                                        <asp:ListItem Text="Publisher 3" Value="Publisher 3" />
+                                        <asp:ListItem Text="Publisher 4" Value="Publisher 4" />
+                                        <asp:ListItem Text="Publisher 5" Value="Publisher 5" />
                                     </asp:DropDownList>
                                 </div>
                             </div>
@@ -80,7 +101,7 @@
                                 </div>
                                 <label>Ngày xuất bản</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox3" runat="server" placeholder="Ngày xuất bản" TextMode="Date"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox3" runat="server" placeholder="Date" TextMode="Date"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -119,15 +140,15 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Ấn bản</label>
+                                <label>Ngày xuất bản</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox9" runat="server" placeholder="Ấn bản"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox9" runat="server" placeholder="Ngày xuất bản"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Giá sách</label>
+                                <label>Giá</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox10" runat="server" placeholder="Giá sách" TextMode="Number"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox10" runat="server" placeholder="Giá" TextMode="Number"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
@@ -139,46 +160,46 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label>Tổng số sách</label>
+                                <label>Kho thực tế</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox4" runat="server" placeholder="Tổng số sách" TextMode="Number"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox4" runat="server" placeholder="Actual Stock" TextMode="Number"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Current Stock</label>
+                                <label>Kho hiện tại</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox5" runat="server" placeholder="Book Cost(per unit)" TextMode="Number" ReadOnly="True"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox5" runat="server" placeholder="Giá" TextMode="Number" ReadOnly="True"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-4">
-                                <label>Issued Books</label>
+                                <label>Sách đã cho mượn</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Pages" TextMode="Number" ReadOnly="True"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox7" runat="server" placeholder="Sách đã cho mượn" TextMode="Number" ReadOnly="True"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-12">
-                                <label>Mô tả</label>
+                                <label>Mô tả sách</label>
                                 <div class="form-group">
-                                    <asp:TextBox CssClass="form-control" ID="TextBox6" runat="server" placeholder="Mô tả" TextMode="MultiLine" Rows="2"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox6" runat="server" placeholder="Mô tả sách" TextMode="MultiLine" Rows="2"></asp:TextBox>
                                 </div>
                             </div>
                         </div>
                         <div class="row">
                             <div class="col-4">
-                                <asp:Button ID="Button1" class="btn btn-lg btn-block btn-success" runat="server" Text="Thêm" />
+                                <asp:Button ID="Button1" class="btn btn-lg btn-block btn-success" runat="server" Text="Thêm" OnClick="Button1_Click" />
                             </div>
                             <div class="col-4">
-                                <asp:Button ID="Button3" class="btn btn-lg btn-block btn-warning" runat="server" Text="Cập nhật" />
+                                <asp:Button ID="Button3" class="btn btn-lg btn-block btn-warning" runat="server" Text="Cập nhật" OnClick="Button3_Click" />
                             </div>
                             <div class="col-4">
-                                <asp:Button ID="Button2" class="btn btn-lg btn-block btn-danger" runat="server" Text="Xóa" />
+                                <asp:Button ID="Button2" class="btn btn-lg btn-block btn-danger" runat="server" Text="Xóa" OnClick="Button2_Click" />
                             </div>
                         </div>
                     </div>
                 </div>
-                <a href="homepage.aspx"><< Back to Home</a><br>
+                <a href="HomePage.as"><< Quay lại trang chủ</a><br>
                 <br>
             </div>
             <div class="col-md-7">
@@ -187,7 +208,7 @@
                         <div class="row">
                             <div class="col">
                                 <center>
-                                    <h4>Danh sách kiểm kê sách</h4>
+                                    <h4>Tất cả sách</h4>
                                 </center>
                             </div>
                         </div>
@@ -197,8 +218,74 @@
                             </div>
                         </div>
                         <div class="row">
+                            <asp:SqlDataSource ID="SqlDataSource1" runat="server" ConnectionString="<%$ ConnectionStrings:elibraryDBConnectionString %>" SelectCommand="SELECT * FROM [book_master_tbl]"></asp:SqlDataSource>
                             <div class="col">
-                                <asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server"></asp:GridView>
+                                <asp:GridView class="table table-striped table-bordered" ID="GridView1" runat="server" AutoGenerateColumns="False" DataKeyNames="book_id" DataSourceID="SqlDataSource1">
+                                    <Columns>
+                                        <asp:BoundField DataField="book_id" HeaderText="ID" ReadOnly="True" SortExpression="book_id">
+                                            <ControlStyle Font-Bold="True" />
+                                            <ItemStyle Font-Bold="True" />
+                                        </asp:BoundField>
+                                        <asp:TemplateField>
+                                            <ItemTemplate>
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div class="col-lg-10">
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <asp:Label ID="Label1" runat="server" Text='<%# Eval("book_name") %>' Font-Bold="True" Font-Size="X-Large"></asp:Label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    <span>Author - </span>
+                                                                    <asp:Label ID="Label2" runat="server" Font-Bold="True" Text='<%# Eval("author_name") %>'></asp:Label>
+                                                                    &nbsp;| <span><span>&nbsp;</span>Thể loại - </span>
+                                                                    <asp:Label ID="Label3" runat="server" Font-Bold="True" Text='<%# Eval("Thể loại") %>'></asp:Label>
+                                                                    &nbsp;| 
+                                                   <span>Ngôn ngữ -<span>&nbsp;</span>
+                                                       <asp:Label ID="Label4" runat="server" Font-Bold="True" Text='<%# Eval("language") %>'></asp:Label>
+                                                   </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    Publisher -
+                                                   <asp:Label ID="Label5" runat="server" Font-Bold="True" Text='<%# Eval("publisher_name") %>'></asp:Label>
+                                                                    &nbsp;| Ngày xuất bản -
+                                                   <asp:Label ID="Label6" runat="server" Font-Bold="True" Text='<%# Eval("publish_date") %>'></asp:Label>
+                                                                    &nbsp;| Số trang -
+                                                   <asp:Label ID="Label7" runat="server" Font-Bold="True" Text='<%# Eval("no_of_Số trang") %>'></asp:Label>
+                                                                    &nbsp;| Ngày xuất bản -
+                                                   <asp:Label ID="Label8" runat="server" Font-Bold="True" Text='<%# Eval("Ngày xuất bản") %>'></asp:Label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    Cost -
+                                                   <asp:Label ID="Label9" runat="server" Font-Bold="True" Text='<%# Eval("book_cost") %>'></asp:Label>
+                                                                    &nbsp;| Kho hiện tại -
+                                                   <asp:Label ID="Label10" runat="server" Font-Bold="True" Text='<%# Eval("actual_stock") %>'></asp:Label>
+                                                                    &nbsp;| Sách sẵn có -
+                                                   <asp:Label ID="Label11" runat="server" Font-Bold="True" Text='<%# Eval("current_stock") %>'></asp:Label>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-12">
+                                                                    Mô tả -
+                                                   <asp:Label ID="Label12" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="Smaller" Text='<%# Eval("book_description") %>'></asp:Label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-2">
+                                                            <asp:Image class="img-fluid" ID="Image1" runat="server" ImageUrl='<%# Eval("book_img_link") %>' />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
                             </div>
                         </div>
                     </div>

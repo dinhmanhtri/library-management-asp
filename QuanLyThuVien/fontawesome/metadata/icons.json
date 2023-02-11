@@ -378,7 +378,7 @@
       "brands"
     ]
   },
-  "500px": {
+  "500": {
     "changes": [
       "4.4.0",
       "5.0.0"
@@ -391,7 +391,7 @@
       "brands"
     ],
     "unicode": "f26e",
-    "label": "500px",
+    "label": "500",
     "voted": false,
     "svg": {
       "brands": {

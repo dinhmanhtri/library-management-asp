@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.SqlClient;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -9,9 +12,217 @@ namespace QuanLyThuVien
 {
     public partial class AdminPublisherManagement : System.Web.UI.Page
     {
+        string _strcon = ConfigurationManager.ConnectionStrings["con"].ConnectionString;
+
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            GridView1.DataBind();
         }
+
+        // add publisher
+        protected void Button2_Click(object sender, EventArgs e)
+        {
+            if (checkPublisherExists())
+            {
+                Response.Write("<script>alert('Nhà xuất bản đã tồn tại');</script>");
+            }
+            else
+            {
+                addNewPublisher();
+            }
+        }
+        // update publisher
+        protected void Button3_Click(object sender, EventArgs e)
+        {
+            if (checkPublisherExists())
+            {
+                updatePublisherByID();
+            }
+            else
+            {
+                Response.Write("<script>alert('Nhà xuất bản có mã này không tồn tại');</script>");
+            }
+        }
+        // delete publisher
+        protected void Button4_Click(object sender, EventArgs e)
+        {
+            if (checkPublisherExists())
+            {
+                deletePublisherByID();
+            }
+            else
+            {
+                Response.Write("<script>alert('Nhà xuất bản có mã này không tồn tại');</script>");
+            }
+        }
+        protected void Button1_Click(object sender, EventArgs e)
+        {
+            getPublisherByID();
+        }
+
+
+
+
+        // user defined functions
+
+        void getPublisherByID()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(_strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("SELECT * from publisher_master_tbl where publisher_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count >= 1)
+                {
+                    TextBox2.Text = dt.Rows[0][1].ToString();
+                }
+                else
+                {
+                    Response.Write("<script>alert('Nhà xuất bản có mã này không tồn tại.');</script>");
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+
+            }
+        }
+
+        bool checkPublisherExists()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(_strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("SELECT * from publisher_master_tbl where publisher_id='" + TextBox1.Text.Trim() + "';", con);
+                SqlDataAdapter da = new SqlDataAdapter(cmd);
+                DataTable dt = new DataTable();
+                da.Fill(dt);
+
+                if (dt.Rows.Count >= 1)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+                return false;
+            }
+        }
+
+        void addNewPublisher()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(_strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+                SqlCommand cmd = new SqlCommand("INSERT INTO publisher_master_tbl(publisher_id,publisher_name) values(@publisher_id,@publisher_name)", con);
+
+                cmd.Parameters.AddWithValue("@publisher_id", TextBox1.Text.Trim());
+                cmd.Parameters.AddWithValue("@publisher_name", TextBox2.Text.Trim());
+
+
+                cmd.ExecuteNonQuery();
+                con.Close();
+                Response.Write("<script>alert('Thêm nhà xuất bản thành công!');</script>");
+                GridView1.DataBind();
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
+        }
+
+        public void updatePublisherByID()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(_strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+
+                SqlCommand cmd = new SqlCommand("update publisher_master_tbl set publisher_name=@publisher_name WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
+                cmd.Parameters.AddWithValue("@publisher_name", TextBox2.Text.Trim());
+                int result = cmd.ExecuteNonQuery();
+                con.Close();
+                if (result > 0)
+                {
+
+                    Response.Write("<script>alert('Cập nhật nhà xuất bản thành công!');</script>");
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    Response.Write("<script>alert('Mã nhà xuất bản không tồn tại');</script>");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
+        }
+
+        public void deletePublisherByID()
+        {
+            try
+            {
+                SqlConnection con = new SqlConnection(_strcon);
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
+
+
+                SqlCommand cmd = new SqlCommand("Delete from publisher_master_tbl WHERE publisher_id='" + TextBox1.Text.Trim() + "'", con);
+                int result = cmd.ExecuteNonQuery();
+                con.Close();
+                if (result > 0)
+                {
+
+                    Response.Write("<script>alert('Xóa nhà xuất bản thành công!');</script>");
+                    GridView1.DataBind();
+                }
+                else
+                {
+                    Response.Write("<script>alert('Mã nhà xuất bản không tồn tại');</script>");
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Response.Write("<script>alert('" + ex.Message + "');</script>");
+            }
+        }
+
     }
 }

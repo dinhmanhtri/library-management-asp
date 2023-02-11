@@ -107,7 +107,7 @@
                             <div class="col-md-6">
                                 <label>Tên tài khoản</label>
                                 <div class="form-group">
-                                    <asp:TextBox ID="TextBox8" runat="server" placeholder="Tên tài khoản"></asp:TextBox>
+                                    <asp:TextBox CssClass="form-control" ID="TextBox8" runat="server" placeholder="Tên tài khoản"></asp:TextBox>
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -127,7 +127,7 @@
                         </div>
                     </div>
                 </div>
-                <a href="HomePage.aspx"><< Back to Home</a><br>
+                <a href="HomePage.aspx"><< Quay lại trang chủ</a><br>
                 <br>
             </div>
         </div>

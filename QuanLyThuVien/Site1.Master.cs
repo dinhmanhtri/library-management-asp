@@ -13,6 +13,7 @@ namespace QuanLyThuVien
         {
             try
             {
+                Session["role"] = Session["role"] ?? "";
                 if (Session["role"].Equals(""))
                 {
                     LinkButton1.Visible = true; // user login link button
@@ -45,6 +46,7 @@ namespace QuanLyThuVien
                     LinkButton12.Visible = false; // publisher management link button
                     LinkButton8.Visible = false; // book inventory link button
                     LinkButton9.Visible = false; // book issuing link button
+                    LinkButton10.Visible = false; // member management link button
                 }
                 else if (Session["role"].Equals("admin"))
                 {
@@ -61,6 +63,7 @@ namespace QuanLyThuVien
                     LinkButton12.Visible = true; // publisher management link button
                     LinkButton8.Visible = true; // book inventory link button
                     LinkButton9.Visible = true; // book issuing link button
+                    LinkButton10.Visible = true; // member management link button
                 }
             }
             catch (Exception ex)
@@ -71,47 +74,47 @@ namespace QuanLyThuVien
 
         protected void LinkButton6_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdminLogin.aspx");
+            Response.Redirect("adminlogin.as");
         }
 
         protected void LinkButton11_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdminAuthorManagement.aspx");
+            Response.Redirect("adminauthormanagement.as");
         }
 
         protected void LinkButton12_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdminPublisherManagement.aspx");
+            Response.Redirect("adminpublishermanagement.as");
         }
 
         protected void LinkButton8_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdminBookInventory.aspx");
+            Response.Redirect("adminbookinventory.as");
         }
 
         protected void LinkButton9_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdminBookIssuing.aspx");
+            Response.Redirect("adminbookissuing.as");
         }
 
         protected void LinkButton10_Click(object sender, EventArgs e)
         {
-            Response.Redirect("AdminMemberManagement.aspx");
-        }
-
-        protected void LinkButton1_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("UserLogin.aspx");
-        }
-
-        protected void LinkButton2_Click(object sender, EventArgs e)
-        {
-            Response.Redirect("UserSignup.aspx");
+            Response.Redirect("adminmembermanagement.as");
         }
 
         protected void LinkButton4_Click(object sender, EventArgs e)
         {
-            Response.Redirect("ViewBooks.aspx");
+            Response.Redirect("viewbooks.as");
+        }
+
+        protected void LinkButton1_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("UserLogin.as");
+        }
+
+        protected void LinkButton2_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("usersignup.as");
         }
 
         //logout button
@@ -135,6 +138,8 @@ namespace QuanLyThuVien
             LinkButton8.Visible = false; // book inventory link button
             LinkButton9.Visible = false; // book issuing link button
             LinkButton10.Visible = false; // member management link button
+
+            Response.Redirect("HomePage.as");
         }
 
         protected void LinkButton7_Click(object sender, EventArgs e)
